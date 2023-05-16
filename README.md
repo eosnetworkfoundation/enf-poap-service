@@ -1,6 +1,6 @@
-# base-web-app-template
+# enf-poap-service
 
-Everything you need to build another SvelteKit-based project.
+Everything you need to create a POAP and share a claim link for others to claim it.
 
 ## Set up
 ```sh
