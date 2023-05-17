@@ -19,3 +19,7 @@ chmod +x ./scripts/seed-db-container.sh
 ```
 
 At this point, your application should be up and running.
+
+## Setup Image Service
+This is a demo service for local host dev integration only. 
+[See Instructions Here](https://github.com/eosnetworkfoundation/frontend-engineering/wiki/nginx-image-service)
