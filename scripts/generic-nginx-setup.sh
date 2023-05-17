@@ -14,7 +14,7 @@ LOGROOT=/Library/Logs/nginx/
 WEBROOT=/Library/WebServer/nginx
 
 # default and site config
-DEFAULT_CONF=${1-:./nginx-default.conf}
+DEFAULT_CONF=${1:-./nginx-default.conf}
 IMAGE_SERVICE_CONF="./nginx-image-service.conf"
 
 # exit if config does not exist
@@ -29,9 +29,10 @@ fi
 
 # make the directories we need
 mkdir -p "$NGINX_ROOT"/sites-{enabled,available} || { echo "failed to create directory under $NGINX_ROOT"; exit 1; }
-mkdir -p "$LOGROOT" || { echo "failed to create directory $LOGROOT"; exit 1; }
-mkdir -p "$WEBROOT" || { echo "failed to create root dir $WEBROOT"; exit 1; }
-mkdir -p "$WEBROOT"/images || { echo "failed to create root dir $WEBROOT/images"; exit 1; }
+echo "Enter Password to sudo mkidr $LOGROOT and $WEBROOT"
+sudo mkdir -m777 -p "$LOGROOT" || { echo "failed to create directory $LOGROOT"; exit 1; }
+sudo mkdir -m777 -p "$WEBROOT" || { echo "failed to create root dir $WEBROOT"; exit 1; }
+mkdir -m777 "$WEBROOT"/images || { echo "failed to create root dir $WEBROOT/images"; exit 1; }
 # Backup original config
 mv "$NGINX_ROOT"/nginx.conf  "$NGINX_ROOT"/sites-available/nginx-original.conf
 # update root config
@@ -61,6 +62,6 @@ nginx -t || { echo "ngix configs are messed up"; exit 1; }
 
 # cleanup
 # rm -rf /usr/local/etc/nginx/sites-{enabled,available}
-# rm -rf /Library/Logs/nginx/
-# rm -rf /Library/WebServer/nginx
+# sudo rm -rf /Library/Logs/nginx/
+# sudo rm -rf /Library/WebServer/nginx
 # cp /usr/local/etc/nginx/nginx.conf.default /usr/local/etc/nginx/nginx.conf
