@@ -19,3 +19,6 @@ chmod +x ./scripts/seed-db-container.sh
 ```
 
 At this point, your application should be up and running.
+
+## Backend API
+The API for storing images and tokens is documented in [./api.yaml](./api.yaml) this can be pasted into https://editor-next.swagger.io/ to view the API information in a nicer format. You can also install an extension for OpenAPI to generate this preview in your IDE.

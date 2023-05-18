@@ -1,0 +1,97 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: POAP Storage
+    url: https://virtserver.swaggerhub.com/JUANMARROQUIN95/Poap/1.0.0
+info:
+  description: API For storing POAP
+  version: "1.0.0"
+  title: POAP API
+paths:
+  /v1/poap/store:
+    post:
+      summary: Stores poap metadata in DB and returns claim code
+      operationId: storePoap
+      responses:
+        '201':
+          description: poap stored
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PoapClaimData"
+        '400':
+          description: 'invalid input, object invalid'
+        '500':
+          description: 'internal server error, potentially with storing in the DB'
+      requestBody:
+        content:
+          json:
+            schema:
+              $ref: "#/components/schemas/PoapMetadata"
+  /v1/images/upload:
+    post:
+      summary: Uploads an image to our DB, returns a url
+      operationId: uploadImage
+      responses:
+        '201':
+          description: image stored in db
+          content: 
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ImageClientData"
+        '400':
+          description: 'invalid input, object invalid'
+        '500':
+          description: 'internal server error, potentially with storing in the DB'
+      requestBody:
+        description: See https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects#sending_files_using_a_formdata_object for an example of sending files using formdata.
+        content:
+          multipart/form-data:
+            schema:
+              $ref: "#/components/schemas/ImageFile"
+components:
+  schemas:
+    PoapMetadata:
+      type: object
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: ENF Fireside Chat Participation
+        description:
+          type: string
+          example: Demonstrates participation in an ENF fireside chat
+        imageUrl:
+          type: string
+          example: https://cdn-images-1.medium.com/v2/resize:fit:800/1*5FNuSa1b6gVd70NmZQmu7Q.png
+    ImageFile:
+      type: object
+      required:
+          - file
+      properties:
+        file:
+          type: string
+          format: binary
+    ImageClientData:
+      type: object
+      required:
+        - url
+      properties:
+        url:
+          type: string
+          format: uri
+          example: https://cdn-images-1.medium.com/max/800/1*5FNuSa1b6gVd70NmZQmu7Q.png
+    PoapClaimData:
+      type: object
+      required:
+        - claimUrl
+        - claimCode
+      properties:
+        claimUrl:
+          type: string
+          format: uri
+          example: https://localhost:3000/?id=abc123
+        claimCode:
+          type: string
+          example: abc123
