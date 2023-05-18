@@ -1,8 +1,4 @@
 openapi: 3.0.0
-servers:
-  # Added by API Auto Mocking Plugin
-  - description: POAP Storage
-    url: https://virtserver.swaggerhub.com/JUANMARROQUIN95/Poap/1.0.0
 info:
   description: API For storing POAP
   version: "1.0.0"
