@@ -51,7 +51,7 @@
 
 </script>
 
-<div class="p-8 bg-white shadow-xl rounded-lg transform transition-transform hover:scale-105">
+<div class="p-8 bg-white shadow-xl rounded-lg">
     <h2 class="mb-4 text-xl font-semibold text-green-700">ENF's POAP Center</h2>
     <button on:click={connectWallet} class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Connect MetaMask Wallet</button>
     <button on:click={logoutWallet} class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Logout</button>
