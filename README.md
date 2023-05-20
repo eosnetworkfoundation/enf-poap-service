@@ -19,3 +19,9 @@ chmod +x ./scripts/seed-db-container.sh
 ```
 
 At this point, your application should be up and running.
+
+## Working with Prisma locally
+Modify your .env file to use localhost as the DATABASE_HOST instead of "db"
+DATABASE_HOST="localhost"
+
+Now you can run any prisma commands in your local command line and it will still hit the postgreSQL image in Docker.
