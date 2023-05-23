@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "vite dev",
         "build": "vite build",
+        "server": "node -r dotenv/config prod-server.js",
         "preview": "vite preview",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -16,7 +17,6 @@
         "@sveltejs/adapter-auto": "^2.0.0",
         "@sveltejs/adapter-node": "^1.2.4",
         "@sveltejs/kit": "^1.5.0",
-        "@types/node": "^20.2.1",
         "@typescript-eslint/eslint-plugin": "^5.45.0",
         "@typescript-eslint/parser": "^5.45.0",
         "autoprefixer": "^10.4.7",

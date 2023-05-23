@@ -13,4 +13,4 @@ RUN yarn run build
 EXPOSE 8080
 
 # [PI-SGNL] WIP: We need to figure out how to pass signals in properly.
-CMD [ "node", "prod-server.js"]
+CMD [ "node", "-r", "dotenv/config", "prod-server.js"]

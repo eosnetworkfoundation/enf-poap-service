@@ -4,9 +4,10 @@
 
 set -euxo pipefail
 
-echo "Dropping data and re-seeding container..."
+echo "Applying migrations..."
 source .env
-npx prisma migrate reset --force
+npx prisma generate
+npx prisma migrate deploy
 echo "Done."
 
 exec "$@"
