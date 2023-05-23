@@ -3,17 +3,15 @@ import { json } from '@sveltejs/kit';
 
 export async function POST({ request }) {
   const formData = await request.formData();
-  let image = formData.get('image');
+  const image = (formData?.get('image') ?? {}) as File;
 
-  if (!image || !(image as File).name) {
+  if (!image.name) {
     return json({ error: 'Request did not contain file formdata with the key "image"' }, { status: 400 });
   }
 
-  image = image as File;
-  const uniqueFilename = `${image.name}`;
   try {
     // Specify the directory where you want to save the uploaded files
-    const uploadPath = `static/uploads/${uniqueFilename}`;
+    const uploadPath = `static/uploads/${image.name}`;
 
     // Write the file to the specified path
     await writeFile(uploadPath, new Uint8Array(await image.arrayBuffer()));

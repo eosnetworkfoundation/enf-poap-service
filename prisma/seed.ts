@@ -20,25 +20,25 @@ const tokens: Prisma.TokenCreateInput[] = [
     description: "Token granted to attendees of the monthly dog lovers meeting",
     imageUrl: "https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U"
   },
-]
+];
 
 async function main() {
-  console.log(`Start seeding ...`)
+  console.log(`Start seeding ...`);
   for (const t of tokens) {
     const token = await prisma.token.create({
       data: t,
-    })
-    console.log(`Created token with id: ${token.id}`)
+    });
+    console.log(`Created token with id: ${token.id}`);
   }
-  console.log(`Seeding finished.`)
+  console.log(`Seeding finished.`);
 }
 
 main()
-  .then(async () => {
-    await prisma.$disconnect()
-  })
   .catch(async (e) => {
     console.error(e)
     await prisma.$disconnect()
     process.exit(1)
   })
+  .finally(async () => {
+    await prisma.$disconnect()
+  });
