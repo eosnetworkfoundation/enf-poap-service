@@ -24,6 +24,21 @@ paths:
           json:
             schema:
               $ref: "#/components/schemas/PoapMetadata"
+  /v1/poap/claimed:
+    post:
+      summary: Gets claimed poap tokens for the user
+      operationId: claimedPoap
+      responses:
+        '200':
+          description: found tokens
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/PoapClaimData"
+        '400':
+          description: 'invalid input, object invalid'
+        '500':
+          description: 'internal server error, potentially with storing in the DB'
   /v1/images/upload:
     post:
       summary: Uploads an image to our DB, returns a url
