@@ -6,7 +6,6 @@
     let provider;
 
     async function connectWallet() {
-        console.log("connecting")
         if (typeof window.ethereum !== "undefined") {
             try {
                 await window.ethereum.request({ method: "eth_requestAccounts" });
