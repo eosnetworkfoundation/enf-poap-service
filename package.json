@@ -5,6 +5,7 @@
     "scripts": {
         "dev": "vite dev",
         "build": "vite build",
+        "server": "node -r dotenv/config prod-server.js",
         "preview": "vite preview",
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
@@ -35,13 +36,15 @@
         "svelte-check": "^3.0.1",
         "svelte-preprocess": "^5.0.3",
         "tailwindcss": "^3.1.5",
+        "ts-node": "^10.9.1",
         "tslib": "^2.4.1",
-        "typescript": "^5.0.0",
+        "typescript": "^5.0.4",
         "vite": "^4.3.0",
         "vitest": "^0.25.3"
     },
     "type": "module",
     "dependencies": {
+        "@prisma/client": "4.13.0",
         "express": "^4.18.2",
         "web3": "^1.10.0"
     },
@@ -50,5 +53,8 @@
         "/src/static/**",
         "/src/routes/**",
         "/src/lib/**"
-    ]
+    ],
+    "prisma": {
+        "seed": "ts-node --esm prisma/seed.ts"
+    }
 }

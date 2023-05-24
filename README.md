@@ -12,10 +12,17 @@ cd <directory>
 docker-compose down -v # if needed
 docker-compose up # or docker-compose up --build if you modified the Dockerfile
 ```
-Once you see both containers up and ready, run from the repo directory root:
+
+Once you see both containers up and ready, you can reset, apply the latest migrations, and seed the DB using
 ```sh
 chmod +x ./scripts/seed-db-container.sh
 ./scripts/seed-db-container.sh
+```
+
+If you do not want to reset the db or seed it and only want to apply the latest migrations, you can run
+```sh
+chmod +x ./scripts/apply-latest-migrations.sh
+./scripts/apply-latest-migrations.sh
 ```
 
 At this point, your application should be up and running.
