@@ -1,28 +1,29 @@
 <script lang="ts">
-    import Web3 from "web3";
+    import { ethers } from "ethers";
     import { goto } from '$app/navigation';
     
     let metadata = {};
-    let web3;
+    let provider;
 
     async function connectWallet() {
+        console.log("connecting")
         if (typeof window.ethereum !== "undefined") {
-            web3 = new Web3(window.ethereum);
             try {
                 await window.ethereum.request({ method: "eth_requestAccounts" });
-                const accounts = await web3.eth.getAccounts();
-
+                const provider = new ethers.providers.Web3Provider(window.ethereum);
+                const signer = provider.getSigner();
+                
                 // Get wallet address
-                const address = accounts[0];
+                const address = await signer.getAddress();
                 metadata.address = `Wallet Address: ${address}`;
 
                 // Get network type
-                const networkType = await web3.eth.net.getNetworkType();
-                metadata.network = `Network: ${networkType}`;
+                const network = await provider.getNetwork();
+                metadata.network = `Network: ${network.name}`;
 
                 // Get account balance
-                const balanceWei = await web3.eth.getBalance(address);
-                const balanceEther = web3.utils.fromWei(balanceWei);
+                const balanceWei = await provider.getBalance(address);
+                const balanceEther = ethers.utils.formatEther(balanceWei);
                 metadata.balance = `Balance: ${balanceEther} ETH`;
 
             } catch (error) {
@@ -34,8 +35,8 @@
     }
 
     function logoutWallet() {
-        if (web3) {
-            web3 = null;
+        if (provider) {
+            provider = null;
             metadata = {};
             window.ethereum.removeAllListeners(); // Remove any listeners to prevent memory leaks
         }
@@ -51,13 +52,16 @@
 
 </script>
 
-<div class="p-8 bg-white shadow-xl rounded-lg">
-    <h2 class="mb-4 text-xl font-semibold text-green-700">ENF's POAP Center</h2>
-    <button on:click={connectWallet} class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Connect MetaMask Wallet</button>
-    <button on:click={logoutWallet} class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Logout</button>
-    <p class="mb-4 text-sm text-gray-700">{metadata.address}</p>
-    <p class="mb-4 text-sm text-gray-700">{metadata.network}</p>
-    <p class="mb-4 text-sm text-gray-700">{metadata.balance}</p>
-    <button on:click={navigateToClaimToken} class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Claim Token</button>
-    <button on:click={navigateToCreateToken} class="w-full px-3 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Create Token</button>
+
+<div class="flex justify-center items-center min-h-screen">
+    <div class="p-8 bg-white shadow-xl rounded-lg">
+        <h2 class="mb-4 text-xl font-semibold text-green-700">ENF's POAP Center</h2>
+        <button on:click={connectWallet} class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Connect MetaMask Wallet</button>
+        <button on:click={logoutWallet} class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Logout</button>
+        <p class="mb-4 text-sm text-gray-700">{metadata.address}</p>
+        <p class="mb-4 text-sm text-gray-700">{metadata.network}</p>
+        <p class="mb-4 text-sm text-gray-700">{metadata.balance}</p>
+        <button on:click={navigateToClaimToken} class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Claim Token</button>
+        <button on:click={navigateToCreateToken} class="w-full px-3 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Create Token</button>
+    </div>
 </div>

@@ -42,6 +42,8 @@
     },
     "type": "module",
     "dependencies": {
+        "buffer": "^6.0.3",
+        "ethers": "^5.7.2",
         "express": "^4.18.2",
         "web3": "^1.10.0"
     },

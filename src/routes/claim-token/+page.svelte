@@ -1,6 +1,6 @@
 <script lang="ts">
-    let claimCode: string = "";
-    let message: string = "";
+    let claimCode: string;
+    let message: string;
 
     function submit(): void {
         if (claimCode === "password") {
@@ -17,6 +17,7 @@
 
 </script>
 
+<div class="flex justify-center items-center min-h-screen">
 <div class="p-8 bg-white shadow-xl rounded-lg">
     <h2 class="mb-4 text-xl font-semibold text-green-700">Claim Token</h2>
     <div class="mb-4">
@@ -29,4 +30,5 @@
             {message}
         </div>
     {/if}
+</div>
 </div>
