@@ -10,7 +10,7 @@
     ],
     "parser": "@typescript-eslint/parser",
     "plugins": ["@typescript-eslint", "eslint-plugin-prettier"],
-    "ignorePatterns": ["*.cjs", "lib/*", "node_modules/**"],
+    "ignorePatterns": ["*.cjs", "lib/*", "node_modules/**", "*.js"],
     "parserOptions": {
         "sourceType": "module",
         "ecmaVersion": 2020,
@@ -31,7 +31,6 @@
         }
     ],
     "rules": {
-        "comma-dangle": "warn",
         "indent": ["error", 4],
         "prettier/prettier": "warn",
         "no-console": "warn",

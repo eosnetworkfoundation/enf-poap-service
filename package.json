@@ -10,8 +10,10 @@
         "check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
         "check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
         "test:unit": "vitest",
+        "test:one": "vitest run",
         "lint": "prettier --plugin-search-dir . --check . && eslint .",
-        "format": "prettier --plugin-search-dir . --write ."
+        "format": "prettier --plugin-search-dir . --write .",
+        "prepare": "husky install"
     },
     "devDependencies": {
         "@sveltejs/adapter-auto": "^2.0.0",
@@ -46,6 +48,7 @@
     "dependencies": {
         "@prisma/client": "4.13.0",
         "express": "^4.18.2",
+        "husky": "^8.0.3",
         "web3": "^1.10.0"
     },
     "files": [

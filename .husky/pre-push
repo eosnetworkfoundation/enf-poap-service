@@ -1,0 +1,9 @@
+#!/usr/bin/env sh
+. "$(dirname -- "$0")/_/husky.sh"
+
+yarn check
+yarn format
+yarn lint --fix
+git add .
+git commit -m "prettier"
+yarn test:one
