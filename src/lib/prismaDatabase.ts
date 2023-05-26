@@ -9,25 +9,27 @@ export class PrismaDatabase {
     async createToken(token: Prisma.TokenCreateInput) {
         const storedToken = await this.prisma.token.create({
             data: token,
-          });
+        });
         return storedToken.id;
-    };
+    }
 
     async getToken(id: string) {
         const token = await this.prisma.token.findUnique({
             where: {
-              id,
+                id,
             },
-          })
+        });
         return token;
-    };
+    }
 
     async getTokensByAddress(address: string) {
-      const tokens = await this.prisma.user.findUnique({
-        where: {
-          address
-        }
-      }).tokens();
-    return tokens;
+        const tokens = await this.prisma.user
+            .findUnique({
+                where: {
+                    address,
+                },
+            })
+            .tokens();
+        return tokens;
     }
 }
