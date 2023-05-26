@@ -1,6 +1,5 @@
 <script lang="ts">
     import { writable } from 'svelte/store';
-    type Writable<T> = import('svelte/store').Writable<T>;
 
     let name = '';
     let description = '';

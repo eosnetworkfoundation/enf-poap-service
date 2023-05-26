@@ -25,6 +25,7 @@
                 const balanceEther = web3.utils.fromWei(balanceWei);
                 metadata.balance = `Balance: ${balanceEther} ETH`;
             } catch (error) {
+                // eslint-disable-next-line no-console
                 console.error('User rejected the connection request', error);
             }
         } else {

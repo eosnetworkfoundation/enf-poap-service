@@ -1,31 +1,27 @@
 <script lang="ts">
-    let claimCode: string = '';
-    let message: string = '';
+    let claimCode = '';
+    let message = '';
 
     function submit(): void {
+        message = 'Claim Code does not exist.';
+
         if (claimCode === 'password') {
             message = 'Success!';
-        } else {
-            message = 'Claim Code does not exist.';
         }
-    }
-
-    // TODO: create func to check if claim code is in DB
-    function isValidClaimCode(claimCode: string): boolean {
-        return true;
     }
 </script>
 
 <div class="p-8 bg-white shadow-xl rounded-lg">
     <h2 class="mb-4 text-xl font-semibold text-green-700">Claim Token</h2>
     <div class="mb-4">
-        <label class="block mb-2 text-sm font-medium text-gray-600" />
-        <input
-            type="text"
-            bind:value={claimCode}
-            placeholder="Enter your claim code"
-            class="w-full px-3 py-2 text-sm text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-green-500 transition-colors"
-        />
+        <label class="block mb-2 text-sm font-medium text-gray-600">
+            <input
+                type="text"
+                bind:value={claimCode}
+                placeholder="Enter your claim code"
+                class="w-full px-3 py-2 text-sm text-gray-700 placeholder-gray-400 bg-white border border-gray-300 rounded-md focus:outline-none focus:border-green-500 transition-colors"
+            />
+        </label>
     </div>
     <button
         on:click={submit}

@@ -1,4 +1,6 @@
-import { PrismaClient, Prisma } from '@prisma/client';
+/* eslint no-console: "off" */
+
+import { Prisma, PrismaClient } from '@prisma/client';
 
 const prisma = new PrismaClient();
 
