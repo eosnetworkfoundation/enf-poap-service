@@ -3,12 +3,7 @@
     import { goto } from '$app/navigation';
     import '../vite-env.d.ts';
 
-    let metadata: {
-        address?: string;
-        network?: string;
-        balance?: string;
-        message?: string;
-    } = {};
+    let metadata: Record<string, string> = {};
     let provider: ethers.providers.Web3Provider | null;
 
     async function connectWallet() {
