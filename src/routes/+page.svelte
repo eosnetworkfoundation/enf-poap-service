@@ -31,12 +31,12 @@
                 const balanceWei = await provider.getBalance(address);
                 const balanceEther = ethers.utils.formatEther(balanceWei);
                 metadata.balance = `Balance: ${balanceEther} ETH`;
-
             } catch (error) {
-                console.error("User rejected the connection request", error);
+                console.error('User rejected the connection request', error);
             }
         } else {
-            metadata.message = "MetaMask is not installed. Please install MetaMask to connect your wallet.";
+            metadata.message =
+                'MetaMask is not installed. Please install MetaMask to connect your wallet.';
         }
     }
 
@@ -47,25 +47,40 @@
     }
 
     function navigateToClaimToken() {
-        goto('/claim-token')
+        goto('/claim-token');
     }
 
     function navigateToCreateToken() {
-        goto('/create-token')
+        goto('/create-token');
     }
-
 </script>
 
 
 <div class="flex justify-center items-center min-h-screen">
     <div class="p-8 bg-white shadow-xl rounded-lg">
         <h2 class="mb-4 text-xl font-semibold text-green-700">ENF's POAP Center</h2>
-        <button on:click={connectWallet} class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Connect MetaMask Wallet</button>
-        <button on:click={logoutWallet} class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Logout</button>
+        <button
+            on:click={connectWallet}
+            class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors"
+            >Connect MetaMask Wallet</button
+        >
+        <button
+            on:click={logoutWallet}
+            class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors"
+            >Logout</button
+        >
         <p class="mb-4 text-sm text-gray-700">{metadata.address}</p>
         <p class="mb-4 text-sm text-gray-700">{metadata.network}</p>
         <p class="mb-4 text-sm text-gray-700">{metadata.balance}</p>
-        <button on:click={navigateToClaimToken} class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Claim Token</button>
-        <button on:click={navigateToCreateToken} class="w-full px-3 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors">Create Token</button>
+        <button
+            on:click={navigateToClaimToken}
+            class="w-full px-3 py-2 mb-4 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors"
+            >Claim Token</button
+        >
+        <button
+            on:click={navigateToCreateToken}
+            class="w-full px-3 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors"
+            >Create Token</button
+        >
     </div>
 </div>
