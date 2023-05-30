@@ -5,5 +5,10 @@ export default defineConfig({
     plugins: [sveltekit()],
     test: {
         include: ['src/**/*.{test,spec}.{js,ts}'],
+    },
+    resolve: {
+        alias: {
+            buffer: 'buffer/', // 'Buffer' efficiently manipulates binary data in Ethereum transactions.
+        }
     }
 });
