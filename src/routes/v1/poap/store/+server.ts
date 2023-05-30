@@ -23,6 +23,6 @@ export async function POST({ request }) {
             { status: 201 }
         );
     } catch (error) {
-        return json({ error: 'Invalid input' }, { status: 400 });
+        return json({ error: 'Internal error' }, { status: 500 });
     }
 }
