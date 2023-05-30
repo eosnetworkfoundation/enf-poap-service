@@ -1,9 +1,15 @@
 <script lang="ts">
-    import { ethers } from "ethers";
+    import { BigNumber, ethers } from "ethers";
     import { goto } from '$app/navigation';
+    import "../vite-env.d.ts";
     
-    let metadata = {};
-    let provider;
+    let metadata: {
+        address?: string;
+        network?: string;
+        balance?: string;
+        message?: string;
+    } = {};
+    let provider: ethers.providers.Web3Provider | null;
 
     async function connectWallet() {
         if (typeof window.ethereum !== "undefined") {
@@ -11,6 +17,7 @@
                 await window.ethereum.request({ method: "eth_requestAccounts" });
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
+                console.log(typeof(signer))
                 
                 // Get wallet address
                 const address = await signer.getAddress();
@@ -34,11 +41,9 @@
     }
 
     function logoutWallet() {
-        if (provider) {
-            provider = null;
-            metadata = {};
-            window.ethereum.removeAllListeners(); // Remove any listeners to prevent memory leaks
-        }
+        provider = null;
+        metadata = {};
+        window.ethereum.removeAllListeners(); // Remove any listeners to prevent memory leaks
     }
 
     function navigateToClaimToken() {
