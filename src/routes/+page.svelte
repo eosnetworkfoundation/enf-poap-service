@@ -1,8 +1,8 @@
 <script lang="ts">
-    import { ethers } from "ethers";
+    import { ethers } from 'ethers';
     import { goto } from '$app/navigation';
-    import "../vite-env.d.ts";
-    
+    import '../vite-env.d.ts';
+
     let metadata: {
         address?: string;
         network?: string;
@@ -12,12 +12,12 @@
     let provider: ethers.providers.Web3Provider | null;
 
     async function connectWallet() {
-        if (typeof window.ethereum !== "undefined") {
+        if (typeof window.ethereum !== 'undefined') {
             try {
-                await window.ethereum.request({ method: "eth_requestAccounts" });
+                await window.ethereum.request({ method: 'eth_requestAccounts' });
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
-                
+
                 // Get wallet address
                 const address = await signer.getAddress();
                 metadata.address = `Wallet Address: ${address}`;
@@ -53,7 +53,6 @@
         goto('/create-token');
     }
 </script>
-
 
 <div class="flex justify-center items-center min-h-screen">
     <div class="p-8 bg-white shadow-xl rounded-lg">

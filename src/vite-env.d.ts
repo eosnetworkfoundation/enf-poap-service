@@ -5,4 +5,3 @@ declare global {
         ethereum?: ethers.providers.ExternalProvider;
     }
 }
-  
