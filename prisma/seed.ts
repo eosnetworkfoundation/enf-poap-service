@@ -11,8 +11,8 @@ const tokens: Prisma.TokenCreateInput[] = [
             create: [
                 {
                     address: '0xf4C31FA6605a233259a6D8f8762da1E136131784',
-                },
-            ],
+                }
+            ]
         },
     },
     {
@@ -20,7 +20,7 @@ const tokens: Prisma.TokenCreateInput[] = [
         description: 'Token granted to attendees of the monthly dog lovers meeting',
         imageUrl:
             'https://fastly.picsum.photos/id/237/200/300.jpg?hmac=TmmQSbShHz9CdQm0NkEjx1Dyh_Y984R9LpNrpvH2D_U',
-    },
+    }
 ];
 
 async function main() {

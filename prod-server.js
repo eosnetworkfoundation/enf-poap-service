@@ -15,11 +15,11 @@ app.get('/health', (req, res) => {
 app.use(handler);
 
 app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}.`);
+    console.log(`Listening on port ${PORT}.`);
 });
 
 function shutdownServer() {
-  console.log('Server shutting down.');
+    console.log('Server shutting down.');
 }
 
 process.on('SIGINT', shutdownServer);
