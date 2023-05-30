@@ -31,7 +31,6 @@
         }
     ],
     "rules": {
-        "comma-dangle": "warn",
         "indent": ["error", 4],
         "prettier/prettier": "warn",
         "no-console": "warn",

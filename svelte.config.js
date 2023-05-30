@@ -10,11 +10,11 @@ const config = {
         vitePreprocess(),
         preprocess({
             postcss: true,
-        })
+        }),
     ],
     kit: {
         adapter: adapter(),
-    }
+    },
 };
 
 export default config;

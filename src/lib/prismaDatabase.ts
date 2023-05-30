@@ -17,7 +17,7 @@ export class PrismaDatabase {
         const token = await this.prisma.token.findUnique({
             where: {
                 id,
-            }
+            },
         });
         return token;
     }
@@ -27,7 +27,7 @@ export class PrismaDatabase {
             .findUnique({
                 where: {
                     address,
-                }
+                },
             })
             .tokens();
         return tokens;
