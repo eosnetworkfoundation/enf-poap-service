@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { BigNumber, ethers } from "ethers";
+    import { ethers } from "ethers";
     import { goto } from '$app/navigation';
     import "../vite-env.d.ts";
     
@@ -17,7 +17,6 @@
                 await window.ethereum.request({ method: "eth_requestAccounts" });
                 const provider = new ethers.providers.Web3Provider(window.ethereum);
                 const signer = provider.getSigner();
-                console.log(typeof(signer))
                 
                 // Get wallet address
                 const address = await signer.getAddress();
