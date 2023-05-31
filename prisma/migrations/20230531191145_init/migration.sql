@@ -4,6 +4,7 @@ CREATE TABLE "Token" (
     "name" TEXT NOT NULL,
     "description" TEXT NOT NULL,
     "imageUrl" TEXT NOT NULL,
+    "creatorId" TEXT NOT NULL,
 
     CONSTRAINT "Token_pkey" PRIMARY KEY ("id")
 );
@@ -30,6 +31,9 @@ CREATE UNIQUE INDEX "_UserToTokens_AB_unique" ON "_UserToTokens"("A", "B");
 
 -- CreateIndex
 CREATE INDEX "_UserToTokens_B_index" ON "_UserToTokens"("B");
+
+-- AddForeignKey
+ALTER TABLE "Token" ADD CONSTRAINT "Token_creatorId_fkey" FOREIGN KEY ("creatorId") REFERENCES "User"("id") ON DELETE RESTRICT ON UPDATE CASCADE;
 
 -- AddForeignKey
 ALTER TABLE "_UserToTokens" ADD CONSTRAINT "_UserToTokens_A_fkey" FOREIGN KEY ("A") REFERENCES "Token"("id") ON DELETE CASCADE ON UPDATE CASCADE;
