@@ -13,13 +13,19 @@ export class PrismaDatabase {
         return storedToken.id;
     }
 
-    async getToken(id: string) {
-        const token = await this.prisma.token.findUnique({
+    async getTokens(ids: string[]) {
+        if (ids.length === 0) {
+            return [];
+        }
+
+        const tokens = await this.prisma.token.findMany({
             where: {
-                id,
+                id: {
+                    in: ids,
+                },
             },
         });
-        return token;
+        return tokens;
     }
 
     async getTokensByAddress(address: string) {
@@ -39,9 +45,9 @@ export class PrismaDatabase {
      * If the claim code does not exist, it returns false to indicate failure and does not update the db
      * @param address
      * @param claimCode
-     * @returns
+     * @returns Promise<boolean> indicating success or failure
      */
-    async addTokenToUserByClaimCode(address: string, claimCode: string) {
+    async addTokenToUserByClaimCode(address: string, claimCode: string): Promise<boolean> {
         const token = await this.prisma.token.findUnique({
             where: {
                 id: claimCode,
@@ -50,36 +56,27 @@ export class PrismaDatabase {
         if (!token) {
             return false;
         }
-        const user = await this.prisma.user.findUnique({
+
+        await this.prisma.user.upsert({
             where: {
                 address,
             },
+            create: {
+                address,
+                tokens: {
+                    connect: {
+                        id: token.id,
+                    },
+                },
+            },
+            update: {
+                tokens: {
+                    connect: {
+                        id: token.id,
+                    },
+                },
+            },
         });
-        if (!user) {
-            await this.prisma.user.create({
-                data: {
-                    address,
-                    tokens: {
-                        connect: {
-                            id: token.id,
-                        },
-                    },
-                },
-            });
-        } else {
-            await this.prisma.user.update({
-                where: {
-                    address,
-                },
-                data: {
-                    tokens: {
-                        connect: {
-                            id: token.id,
-                        },
-                    },
-                },
-            });
-        }
 
         return true;
     }

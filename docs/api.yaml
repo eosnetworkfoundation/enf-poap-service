@@ -4,26 +4,31 @@ info:
     version: '1.0.0'
     title: POAP API
 paths:
-    /v1/poap/{id}:
-        get:
-            summary: Gets poap metadata for the given id
+    /v1/poap:
+        post:
+            summary: Gets poap metadata for the given ids
             operationId: getPoap
-            parameters:
-                - name: id
-                  in: path
-                  description: id of the poap
-                  required: true
-                  schema:
-                      type: string
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            description: array of ids to query
+                            items:
+                                type: string
+                                example: abc123
+                                description: id of the poap to query
             responses:
                 '200':
-                    description: found poap
+                    description: query completed
                     content:
                         application/json:
                             schema:
-                                $ref: '#/components/schemas/PoapMetadata'
-                '404':
-                    description: 'poap not found'
+                                type: array
+                                description: array of poap metadata
+                                items:
+                                    $ref: '#/components/schemas/PoapMetadata'
                 '500':
                     description: 'internal server error'
     /v1/poap/store:
