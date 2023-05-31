@@ -25,15 +25,24 @@ export class PrismaDatabase {
         });
     }
 
-    async getTokensByUserAddress(address: string) {
-        const tokens = await this.prisma.user
+    async getClaimedTokensByUserAddress(address: string) {
+        return await this.prisma.user
             .findUnique({
                 where: {
                     address,
                 },
             })
-            .tokens();
-        return tokens;
+            .claimedTokens();
+    }
+
+    async getCreatedTokensByUserAddress(address: string) {
+        return await this.prisma.user
+            .findUnique({
+                where: {
+                    address,
+                },
+            })
+            .claimedTokens();
     }
 
     /**
@@ -60,14 +69,14 @@ export class PrismaDatabase {
             },
             create: {
                 address: userAddress,
-                tokens: {
+                claimedTokens: {
                     connect: {
                         id: token.id,
                     },
                 },
             },
             update: {
-                tokens: {
+                claimedTokens: {
                     connect: {
                         id: token.id,
                     },
