@@ -79,17 +79,19 @@ paths:
                 '500':
                     description: 'internal server error'
     /v1/poap/claimed:
-        get:
+        post:
             summary: Gets claimed poap tokens for the user
             operationId: claimedPoap
-            parameters:
-                - name: address
-                  in: query
-                  description: address of the user
-                  required: true
-                  schema:
-                      type: string
-                      example: '0x12345678901234567890123456789'
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                address:
+                                    type: string
+                                    example: '0x1234567890123456789012345678901234567890'
             responses:
                 '200':
                     description: found tokens

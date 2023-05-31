@@ -3,15 +3,14 @@ import { PrismaDatabase } from '$lib/prismaDatabase';
 
 const prismaDatabase = new PrismaDatabase();
 
-export async function GET({ url }) {
+export async function POST({ request }) {
     try {
-        const address = url.searchParams.get('address');
-        // sanitize
+        const { address } = (await request.json()) ?? {};
         if (!address) {
             return json({ error: 'Invalid input' }, { status: 400 });
         }
-        const tokens = (await prismaDatabase.getTokensByAddress(address)) ?? [];
-        return json({ tokens }, { status: 200 });
+        const tokens = (await prismaDatabase.getTokensByUserAddress(address)) ?? [];
+        return json(tokens, { status: 200 });
     } catch (error) {
         return json({ error: 'Internal Error' }, { status: 500 });
     }

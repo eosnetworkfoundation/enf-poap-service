@@ -14,21 +14,18 @@ export class PrismaDatabase {
     }
 
     async getTokens(ids: string[]) {
-        if (ids.length === 0) {
-            return [];
-        }
+        if (!ids.length) return [];
 
-        const tokens = await this.prisma.token.findMany({
+        return await this.prisma.token.findMany({
             where: {
                 id: {
                     in: ids,
                 },
             },
         });
-        return tokens;
     }
 
-    async getTokensByAddress(address: string) {
+    async getTokensByUserAddress(address: string) {
         const tokens = await this.prisma.user
             .findUnique({
                 where: {
@@ -43,11 +40,11 @@ export class PrismaDatabase {
      * Updates the user's tokens with the token associated with the claim code
      * If the user does not exist, it creates the user
      * If the claim code does not exist, it returns false to indicate failure and does not update the db
-     * @param address
+     * @param userAddress
      * @param claimCode
      * @returns Promise<boolean> indicating success or failure
      */
-    async addTokenToUserByClaimCode(address: string, claimCode: string): Promise<boolean> {
+    async addTokenToUserByClaimCode(userAddress: string, claimCode: string): Promise<boolean> {
         const token = await this.prisma.token.findUnique({
             where: {
                 id: claimCode,
@@ -59,10 +56,10 @@ export class PrismaDatabase {
 
         await this.prisma.user.upsert({
             where: {
-                address,
+                address: userAddress,
             },
             create: {
-                address,
+                address: userAddress,
                 tokens: {
                     connect: {
                         id: token.id,
