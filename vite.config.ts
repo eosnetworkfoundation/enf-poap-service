@@ -9,6 +9,6 @@ export default defineConfig({
     resolve: {
         alias: {
             buffer: 'buffer/', // 'Buffer' efficiently manipulates binary data in Ethereum transactions.
-        }
-    }
+        },
+    },
 });

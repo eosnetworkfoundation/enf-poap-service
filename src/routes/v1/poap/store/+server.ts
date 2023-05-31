@@ -7,7 +7,6 @@ const defaultImageUrl = 'https://cdn-images-1.medium.com/max/800/1*5FNuSa1b6gVd7
 export async function POST({ request }) {
     try {
         const tokenMetadata = (await request.json()) ?? {};
-        // sanitize
         if (!tokenMetadata.name || !tokenMetadata.description) {
             return json({ error: 'Invalid input' }, { status: 400 });
         }
@@ -23,6 +22,6 @@ export async function POST({ request }) {
             { status: 201 }
         );
     } catch (error) {
-        return json({ error: 'Invalid input' }, { status: 400 });
+        return json({ error: 'Internal error' }, { status: 500 });
     }
 }

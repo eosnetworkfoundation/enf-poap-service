@@ -4,10 +4,43 @@ info:
     version: '1.0.0'
     title: POAP API
 paths:
+    /v1/poap:
+        post:
+            summary: Gets poap metadata for the given ids
+            operationId: getPoap
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            description: array of ids to query
+                            items:
+                                type: string
+                                example: abc123
+                                description: id of the poap to query
+            responses:
+                '200':
+                    description: query completed
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                description: array of poap metadata
+                                items:
+                                    $ref: '#/components/schemas/PoapMetadata'
+                '500':
+                    description: 'internal server error'
     /v1/poap/store:
         post:
             summary: Stores poap metadata in DB and returns claim code
             operationId: storePoap
+            requestBody:
+                required: true
+                content:
+                    json:
+                        schema:
+                            $ref: '#/components/schemas/PoapMetadata'
             responses:
                 '201':
                     description: poap stored
@@ -19,11 +52,62 @@ paths:
                     description: 'invalid input, object invalid'
                 '500':
                     description: 'internal server error, potentially with storing in the DB'
+    /v1/poap/claim:
+        post:
+            summary: Claims poap token for the user
+            operationId: claimPoap
             requestBody:
+                required: true
                 content:
-                    json:
+                    application/json:
                         schema:
-                            $ref: '#/components/schemas/PoapMetadata'
+                            type: object
+                            properties:
+                                claimCode:
+                                    type: string
+                                    example: abc123
+                                address:
+                                    type: string
+                                    example: '0x1234567890123456789012345678901234567890'
+            responses:
+                '200':
+                    description: successfully added token to user
+                '400':
+                    description: 'invalid input, object invalid'
+                '404':
+                    description: 'poap not found'
+                '500':
+                    description: 'internal server error'
+    /v1/poap/claimed:
+        post:
+            summary: Gets claimed poap tokens for the user
+            operationId: claimedPoap
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                address:
+                                    type: string
+                                    example: '0x1234567890123456789012345678901234567890'
+            responses:
+                '200':
+                    description: found tokens
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    tokens:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/PoapMetadata'
+                '400':
+                    description: 'invalid input, object invalid'
+                '500':
+                    description: 'internal server error, potentially with storing in the DB'
     /v1/images/upload:
         post:
             summary: Uploads an image to our DB, returns a url
@@ -40,6 +124,7 @@ paths:
                 '500':
                     description: 'internal server error, potentially with storing in the DB'
             requestBody:
+                required: true
                 description: See https://developer.mozilla.org/en-US/docs/Web/API/FormData/Using_FormData_Objects#sending_files_using_a_formdata_object for an example of sending files using formdata.
                 content:
                     multipart/form-data:
