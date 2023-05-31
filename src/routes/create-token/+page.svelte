@@ -18,8 +18,8 @@
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Please fill in all fields and upload an image.',
-                confirmButtonColor: 'crimson'
-            })
+                confirmButtonColor: 'crimson',
+            });
             return;
         }
 

@@ -15,8 +15,8 @@
                 icon: 'error',
                 title: 'Oops...',
                 text: 'Claim code does not exist.',
-                confirmButtonColor: 'crimson'
-            })
+                confirmButtonColor: 'crimson',
+            });
         }
     }
 
