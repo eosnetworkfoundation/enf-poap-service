@@ -14,10 +14,13 @@ model Token {
   description String
   imageUrl    String
   users       User[] @relation("UserToTokens")
+  creator     User  @relation("CreatorToTokens", fields: [creatorId], references: [id])
+  creatorId   String
 }
 
 model User {
   id      String  @id @default(cuid())
   address String  @unique
-  tokens  Token[] @relation("UserToTokens")
+  claimedTokens  Token[] @relation("UserToTokens")
+  createdTokens Token[] @relation("CreatorToTokens")
 }
