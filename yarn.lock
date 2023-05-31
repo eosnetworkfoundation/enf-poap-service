@@ -4661,6 +4661,11 @@ swarm-js@^0.1.40:
     tar "^4.0.2"
     xhr-request "^1.0.1"
 
+sweetalert2@^11.7.10:
+  version "11.7.10"
+  resolved "https://registry.yarnpkg.com/sweetalert2/-/sweetalert2-11.7.10.tgz#514a9cb89e0d9916fc30608c76432db0cfc3f82c"
+  integrity sha512-SgnO8VF7omM78doFxIAiEyhNBEudVTpYpYXJB9/yftvKD+UlWRaAkLMGD4kvAsgiwwph4SUFlNjiAbB5cUS8/g==
+
 tailwindcss@^3.1.5:
   version "3.3.2"
   resolved "https://registry.yarnpkg.com/tailwindcss/-/tailwindcss-3.3.2.tgz#2f9e35d715fdf0bbf674d90147a0684d7054a2d3"
