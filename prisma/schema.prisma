@@ -9,18 +9,18 @@ datasource db {
 }
 
 model Token {
-  id          String @id @default(cuid())
-  name        String
-  description String
-  imageUrl    String
-  claimers    User[] @relation("UserToTokens")
-  creator     User   @relation("CreatorToTokens", fields: [creatorId], references: [id])
-  creatorId   String
+  id             String @id @default(cuid())
+  name           String
+  description    String
+  imageUrl       String
+  creatorAddress String
+  claimers       User[] @relation("UserToTokens")
+  creator        User   @relation(fields: [creatorAddress], references: [address])
 }
 
 model User {
   id            String  @id @default(cuid())
   address       String  @unique
+  createdTokens Token[]
   claimedTokens Token[] @relation("UserToTokens")
-  createdTokens Token[] @relation("CreatorToTokens")
 }

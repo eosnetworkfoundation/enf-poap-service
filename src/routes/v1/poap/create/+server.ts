@@ -7,7 +7,7 @@ const defaultImageUrl = 'https://cdn-images-1.medium.com/max/800/1*5FNuSa1b6gVd7
 export async function POST({ request }) {
     try {
         const tokenMetadata = (await request.json()) ?? {};
-        if (!tokenMetadata.name || !tokenMetadata.description) {
+        if (!tokenMetadata.name || !tokenMetadata.description || !tokenMetadata.creatorAddress) {
             return json({ error: 'Invalid input' }, { status: 400 });
         }
         const claimCode = await prismaDatabase.createToken({

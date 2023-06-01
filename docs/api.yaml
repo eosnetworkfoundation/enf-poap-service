@@ -30,20 +30,20 @@ paths:
                                 items:
                                     $ref: '#/components/schemas/PoapMetadata'
                 '500':
-                    description: 'internal server error'
-    /v1/poap/store:
+                    description: 'internal server error, potentially with querying the DB'
+    /v1/poap/create:
         post:
-            summary: Stores poap metadata in DB and returns claim code
-            operationId: storePoap
+            summary: Creates the poap in the DB and returns the claim code
+            operationId: createPoap
             requestBody:
                 required: true
                 content:
-                    json:
+                    application/json:
                         schema:
                             $ref: '#/components/schemas/PoapMetadata'
             responses:
                 '201':
-                    description: poap stored
+                    description: poap created
                     content:
                         application/json:
                             schema:
@@ -77,7 +77,7 @@ paths:
                 '404':
                     description: 'poap not found'
                 '500':
-                    description: 'internal server error'
+                    description: 'internal server error, potentially with storing in the DB'
     /v1/poap/claimed:
         post:
             summary: Gets claimed poap tokens for the user
@@ -107,7 +107,37 @@ paths:
                 '400':
                     description: 'invalid input, object invalid'
                 '500':
-                    description: 'internal server error, potentially with storing in the DB'
+                    description: 'internal server error, potentially with querying the DB'
+    /v1/poap/created:
+        post:
+            summary: Gets tokens created by the user
+            operationId: createdPoap
+            requestBody:
+                required: true
+                content:
+                    application/json:
+                        schema:
+                            type: object
+                            properties:
+                                address:
+                                    type: string
+                                    example: '0x1234567890123456789012345678901234567890'
+            responses:
+                '200':
+                    description: found tokens
+                    content:
+                        application/json:
+                            schema:
+                                type: object
+                                properties:
+                                    tokens:
+                                        type: array
+                                        items:
+                                            $ref: '#/components/schemas/PoapMetadata'
+                '400':
+                    description: 'invalid input, object invalid'
+                '500':
+                    description: 'internal server error, potentially with querying the DB'
     /v1/images/upload:
         post:
             summary: Uploads an image to our DB, returns a url
@@ -146,6 +176,9 @@ components:
                 imageUrl:
                     type: string
                     example: https://cdn-images-1.medium.com/v2/resize:fit:800/1*5FNuSa1b6gVd70NmZQmu7Q.png
+                creatorAddress:
+                    type: string
+                    example: '0x1234567890123456789012345678901234567890'
         ImageFile:
             type: object
             required:

@@ -1,16 +1,38 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-
+import type { TokenMetadata } from './types';
 export class PrismaDatabase {
     prisma: PrismaClient;
     constructor() {
         this.prisma = new PrismaClient();
     }
 
-    async createToken(token: Prisma.TokenCreateInput) {
-        const storedToken = await this.prisma.token.create({
-            data: token,
+    /**
+     * Creates the token in the DB and returns the claim code
+     * If the user does not exist, it creates the user
+     * If the claim code does not exist, it returns false to indicate failure and does not update the db
+     * @param userAddress
+     * @param claimCode
+     * @returns Promise<boolean> indicating success or failure
+     */
+    async createToken(tokenMetadata: TokenMetadata) {
+        const token = await this.prisma.token.create({
+            data: {
+                ...tokenMetadata,
+                creatorAddress: undefined,
+                creator: {
+                    connectOrCreate: {
+                        where: {
+                            address: tokenMetadata.creatorAddress,
+                        },
+                        create: {
+                            address: tokenMetadata.creatorAddress,
+                        },
+                    },
+                },
+            },
         });
-        return storedToken.id;
+
+        return token.id;
     }
 
     async getTokens(ids: string[]) {
@@ -42,7 +64,7 @@ export class PrismaDatabase {
                     address,
                 },
             })
-            .claimedTokens();
+            .createdTokens();
     }
 
     /**
