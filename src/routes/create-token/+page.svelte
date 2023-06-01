@@ -1,11 +1,9 @@
 <script lang="ts">
-    import { writable } from 'svelte/store';
-    type Writable<T> = import('svelte/store').Writable<T>;
+    import Swal from 'sweetalert2';
 
     let name = '';
     let description = '';
     let file: File | null = null;
-    const message = writable<string | null>(null);
 
     function handleFileUpload(event: Event) {
         const target = event.target as HTMLInputElement;
@@ -16,14 +14,24 @@
 
     async function submit() {
         if (!name || !description || !file) {
-            message.set('Please fill in all fields and upload an image');
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please fill in all fields and upload an image.',
+                confirmButtonColor: 'crimson',
+            });
             return;
         }
 
         // TODO: Here we would normally send the data to our DB backend
         // For now, we will just simulate a successful submission
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        message.set('Success!');
+        Swal.fire({
+            title: 'Success!',
+            html: 'Claim Code: <a href="https://example.com" style="color: blue;">www.example-url-link.com</a>',
+            icon: 'success',
+            confirmButtonColor: '#48BB78',
+        });
     }
 </script>
 
@@ -62,14 +70,5 @@
                 >Submit</button
             >
         </form>
-        {#if $message}
-            <div
-                class="mt-4 p-2 text-center text-white rounded-md {$message === 'Success!'
-                    ? 'bg-green-500'
-                    : 'bg-red-500'} transition-colors"
-            >
-                {$message}
-            </div>
-        {/if}
     </div>
 </div>
