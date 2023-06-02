@@ -14,18 +14,17 @@ export class PrismaDatabase {
      * @param claimCode
      * @returns Promise<boolean> indicating success or failure
      */
-    async createToken(tokenMetadata: TokenMetadata) {
+    async createToken({ creatorAddress, ...restOfMetadata }: TokenMetadata) {
         const token = await this.prisma.token.create({
             data: {
-                ...tokenMetadata,
-                creatorAddress: undefined,
+                ...restOfMetadata,
                 creator: {
                     connectOrCreate: {
                         where: {
-                            address: tokenMetadata.creatorAddress,
+                            address: creatorAddress,
                         },
                         create: {
-                            address: tokenMetadata.creatorAddress,
+                            address: creatorAddress,
                         },
                     },
                 },
