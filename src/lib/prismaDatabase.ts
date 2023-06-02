@@ -1,16 +1,37 @@
 import { Prisma, PrismaClient } from '@prisma/client';
-
+import type { TokenMetadata } from './types';
 export class PrismaDatabase {
     prisma: PrismaClient;
     constructor() {
         this.prisma = new PrismaClient();
     }
 
-    async createToken(token: Prisma.TokenCreateInput) {
-        const storedToken = await this.prisma.token.create({
-            data: token,
+    /**
+     * Creates the token in the DB and returns the claim code
+     * If the user does not exist, it creates the user
+     * If the claim code does not exist, it returns false to indicate failure and does not update the db
+     * @param userAddress
+     * @param claimCode
+     * @returns Promise<boolean> indicating success or failure
+     */
+    async createToken({ creatorAddress, ...restOfMetadata }: TokenMetadata) {
+        const token = await this.prisma.token.create({
+            data: {
+                ...restOfMetadata,
+                creator: {
+                    connectOrCreate: {
+                        where: {
+                            address: creatorAddress,
+                        },
+                        create: {
+                            address: creatorAddress,
+                        },
+                    },
+                },
+            },
         });
-        return storedToken.id;
+
+        return token.id;
     }
 
     async getTokens(ids: string[]) {
@@ -25,15 +46,24 @@ export class PrismaDatabase {
         });
     }
 
-    async getTokensByUserAddress(address: string) {
-        const tokens = await this.prisma.user
+    async getClaimedTokensByUserAddress(address: string) {
+        return await this.prisma.user
             .findUnique({
                 where: {
                     address,
                 },
             })
-            .tokens();
-        return tokens;
+            .claimedTokens();
+    }
+
+    async getCreatedTokensByUserAddress(address: string) {
+        return await this.prisma.user
+            .findUnique({
+                where: {
+                    address,
+                },
+            })
+            .createdTokens();
     }
 
     /**
@@ -60,14 +90,14 @@ export class PrismaDatabase {
             },
             create: {
                 address: userAddress,
-                tokens: {
+                claimedTokens: {
                     connect: {
                         id: token.id,
                     },
                 },
             },
             update: {
-                tokens: {
+                claimedTokens: {
                     connect: {
                         id: token.id,
                     },

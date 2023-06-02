@@ -1,5 +1,5 @@
 generator client {
-  provider = "prisma-client-js"
+  provider      = "prisma-client-js"
   binaryTargets = ["native", "linux-arm64-openssl-1.1.x"] // for Docker compatibility
 }
 
@@ -9,15 +9,18 @@ datasource db {
 }
 
 model Token {
-  id          String @id @default(cuid())
-  name        String
-  description String
-  imageUrl    String
-  users       User[] @relation("UserToTokens")
+  id             String @id @default(cuid())
+  name           String
+  description    String
+  imageUrl       String
+  creatorAddress String
+  claimers       User[] @relation("UserToTokens")
+  creator        User   @relation(fields: [creatorAddress], references: [address])
 }
 
 model User {
-  id      String  @id @default(cuid())
-  address String  @unique
-  tokens  Token[] @relation("UserToTokens")
+  id            String  @id @default(cuid())
+  address       String  @unique
+  createdTokens Token[]
+  claimedTokens Token[] @relation("UserToTokens")
 }
