@@ -22,6 +22,8 @@ You will need a .env file to define the ports, usernames, passwords, etc. You ca
 We have two docker containers. One hosts our postgreSQL DB the other hosts a containerized version of our repo.
 The containerized version of our repo is a complete copy of what's in our repo and is useful for testing and will ultimately be how we deploy our app. However, development work can just happen directly on your local machine until you are ready to test.
 
+*Note:* Make sure that your .env file has DATABASE_HOST set to db when running these commands and the scripts in the next section.
+
 ```sh
 docker-compose down -v # down shuts down the containers, -v also wipes data from the db
 docker-compose up # or docker-compose up --build if you modified the Dockerfile
