@@ -33,8 +33,8 @@ docker-compose up runs the [Dockerfile](./Dockerfile) which copies the repo, run
 Once you see both containers up and ready, you can reset, apply the latest migrations, and seed the DB using
 
 ```sh
-chmod +x ./scripts/seed-db-container.sh
-./scripts/seed-db-container.sh
+chmod +x ./scripts/init-db.sh
+./scripts/init-db.sh
 ```
 
 That command is most often what you'll want to do when pulling in changes which include modifications to the prisma models.
