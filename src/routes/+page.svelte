@@ -2,10 +2,18 @@
     import { ethers } from 'ethers';
     import { goto } from '$app/navigation';
     import '../vite-env.d.ts';
+    import { PoapServiceClient } from '$lib/PoapServiceClient.js';
+    import type { Token } from '$lib/types.js';
+    import TokenList from '../components/TokenList.svelte';
 
     let metadata: Record<string, string> = {};
     let provider: ethers.providers.Web3Provider | null;
-
+    let poapServiceClient: PoapServiceClient;
+    let createdTokens: Token[] = [];
+    let claimedTokens: Token[] = [];
+    if (typeof window !== 'undefined') {
+        poapServiceClient = new PoapServiceClient();
+    }
     async function connectWallet() {
         if (typeof window.ethereum !== 'undefined') {
             try {
@@ -25,6 +33,8 @@
                 const balanceWei = await provider.getBalance(address);
                 const balanceEther = ethers.utils.formatEther(balanceWei);
                 metadata.balance = `Balance: ${balanceEther} ETH`;
+                loadClaimedTokens(address);
+                loadCreatedTokens(address);
             } catch (error) {
                 console.error('User rejected the connection request', error);
             }
@@ -46,6 +56,18 @@
 
     function navigateToCreateToken() {
         goto('/create-token');
+    }
+
+    function loadCreatedTokens(address: string) {
+        poapServiceClient.getCreatedTokens(address).then((tokens) => {
+            createdTokens = tokens;
+        });
+    }
+
+    function loadClaimedTokens(address: string) {
+        poapServiceClient.getClaimedTokens(address).then((tokens) => {
+            claimedTokens = tokens;
+        });
     }
 </script>
 
@@ -75,5 +97,7 @@
             class="w-full px-3 py-2 text-white bg-green-500 rounded-md hover:bg-green-600 transition-colors"
             >Create Token</button
         >
+        <TokenList tokenList={createdTokens} title="Created Tokens" />
+        <TokenList tokenList={claimedTokens} title="Claimed Tokens" />
     </div>
 </div>

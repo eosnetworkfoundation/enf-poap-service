@@ -4,3 +4,7 @@ export interface TokenMetadata {
     creatorAddress: string;
     imageUrl: string;
 }
+
+export interface Token extends TokenMetadata {
+    id: string;
+}

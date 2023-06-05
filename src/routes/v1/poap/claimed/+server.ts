@@ -12,6 +12,6 @@ export async function POST({ request }) {
         const tokens = (await prismaDatabase.getClaimedTokensByUserAddress(address)) ?? [];
         return json(tokens, { status: 200 });
     } catch (error) {
-        return json({ error: 'Internal Error' }, { status: 500 });
+        return json({ error }, { status: 500 });
     }
 }
