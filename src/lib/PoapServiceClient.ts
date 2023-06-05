@@ -1,3 +1,5 @@
+import type { Token } from "@prisma/client";
+
 export class PoapServiceClient {
     fetch: typeof fetch;
     origin: string;
@@ -7,7 +9,7 @@ export class PoapServiceClient {
         this.fetch = fetchImpl || fetch;
     }
 
-    async getClaimedTokens(address: string) {
+    async getClaimedTokens(address: string): Promise<Token[]> {
         try {
             const response = await this.fetch(`${this.origin}/v1/poap/claimed`, {
                 method: 'POST',
@@ -19,6 +21,10 @@ export class PoapServiceClient {
                 }),
             });
 
+            if (!response.ok) {
+                return [];
+            }
+
             return await response.json();
         } catch (error) {
             console.error(error);
@@ -26,7 +32,7 @@ export class PoapServiceClient {
         }
     }
 
-    async getCreatedTokens(address: string) {
+    async getCreatedTokens(address: string): Promise<Token[]> {
         try {
             const response = await this.fetch(`${this.origin}/v1/poap/created`, {
                 method: 'POST',
@@ -37,6 +43,10 @@ export class PoapServiceClient {
                     address,
                 }),
             });
+
+            if (!response.ok) {
+                return [];
+            }
 
             return await response.json();
         } catch (error) {
