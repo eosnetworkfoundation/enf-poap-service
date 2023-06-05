@@ -3,7 +3,7 @@
     import type { Token } from '$lib/types';
     export let token: Token;
     function navigateToToken() {
-        goto(`/token/${token.id}`);
+        goto(`/tokens/${token.id}`);
     }
 </script>
 
