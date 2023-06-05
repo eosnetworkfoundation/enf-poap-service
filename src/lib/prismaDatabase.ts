@@ -1,4 +1,4 @@
-import { Prisma, PrismaClient } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import type { TokenMetadata } from './types';
 export class PrismaDatabase {
     prisma: PrismaClient;
