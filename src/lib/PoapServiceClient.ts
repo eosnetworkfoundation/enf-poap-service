@@ -1,4 +1,4 @@
-import type { Token } from "@prisma/client";
+import type { Token } from '@prisma/client';
 
 export class PoapServiceClient {
     fetch: typeof fetch;

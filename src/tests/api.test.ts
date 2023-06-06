@@ -34,7 +34,7 @@ describe('POAP Service', () => {
         // wrapper around http call
         const returnedToken = await getToken(testToken.id);
         // check the correct call is made
-        expect(fetch).toHaveBeenCalledWith('http://localhost:8080/v1/poap/',{
+        expect(fetch).toHaveBeenCalledWith('http://localhost:8080/v1/poap/', {
             method: 'POST',
             body: `id: '${testToken.id}'`,
             headers: {
