@@ -1,11 +1,17 @@
 import { describe, expect, it, vi } from 'vitest';
 import { Token } from '$lib/types';
 
+// override fetch to support mock
 global.fetch = vi.fn();
-
+/*
+ * generic function to return that we pass in
+ * return types is currently Array<Token>
+ * will need to expand allowed types as additional tests are added
+ */
 function testFetchResponse(data: Array<Token>) {
     return { json: () => new Promise((resolve) => resolve(data)) };
 }
+// our mock data
 const testToken: Token = {
     id: 'clij9zm550008pc8v0s815grk',
     name: 'Dog lovers monthly token',
@@ -15,7 +21,11 @@ const testToken: Token = {
     creatorAddress: '0x5B38Da6a701c568545dCfcB03FcB875f56beddC4',
 };
 
-export async function getToken(id: string) {
+/*
+ * Functional Wrapper around http call
+ * Could easily put this code inside test
+ */
+async function getToken(id: string) {
     return (
         await fetch('http://localhost:8080/v1/poap/', {
             method: 'POST',
@@ -26,6 +36,9 @@ export async function getToken(id: string) {
         })
     ).json();
 }
+/*
+ ** Our test suit for POAP Services
+ */
 describe('POAP Service', () => {
     it('makes POST request to fetch token meta-data', async () => {
         // mockResolvedValue injected in
