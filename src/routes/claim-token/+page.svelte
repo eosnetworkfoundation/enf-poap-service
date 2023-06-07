@@ -12,7 +12,6 @@
 
     function submit(): void {
         isValidClaimCode(claimCode).then((isValid) => {
-            console.log(isValid);
             if (isValid) {
                 goto(`/tokens/${claimCode}`);
             } else {

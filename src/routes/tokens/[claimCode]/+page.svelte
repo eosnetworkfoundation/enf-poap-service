@@ -27,7 +27,6 @@
     });
 
     function submit(): void {
-        // TODO: add database write
         if (currentAddress !== null) {
             poapServiceClient.claimToken(currentAddress, claimCode);
         } else {
