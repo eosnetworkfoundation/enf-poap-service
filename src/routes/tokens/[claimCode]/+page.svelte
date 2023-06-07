@@ -5,7 +5,7 @@
     import { PoapServiceClient } from '$lib/PoapServiceClient.js';
     import type { Token } from '$lib/types';
     import { userAddress } from '$lib/store.js';
-    
+
     let claimCode: string;
     let name: string;
     let description: string;
@@ -13,10 +13,9 @@
     let poapServiceClient: PoapServiceClient;
     let currentAddress: string | null;
 
-    userAddress.subscribe(value => {
+    userAddress.subscribe((value) => {
         currentAddress = value;
     });
-
 
     $: claimCode = $page.params.claimCode;
 
@@ -24,7 +23,7 @@
         if (typeof window !== 'undefined') {
             poapServiceClient = new PoapServiceClient();
         }
-        loadToken(claimCode)
+        loadToken(claimCode);
     });
 
     function submit(): void {
@@ -32,7 +31,7 @@
         if (currentAddress !== null) {
             poapServiceClient.claimToken(currentAddress, claimCode);
         } else {
-            console.error("Please connect MetaMask wallet.");
+            console.error('Please connect MetaMask wallet.');
         }
 
         Swal.fire({
@@ -50,13 +49,11 @@
                 name = token.name;
                 description = token.description;
                 imageUrl = token.imageUrl;
+            } catch (error) {
+                console.error('Server interrupted. Please try again.');
             }
-           catch (error) {
-                console.error("Server interrupted. Please try again.")
-           } 
         });
     }
-
 </script>
 
 <div class="flex justify-center items-center min-h-screen">

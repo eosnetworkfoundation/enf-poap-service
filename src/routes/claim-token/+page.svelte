@@ -11,13 +11,13 @@
     }
 
     function submit(): void {
-        isValidClaimCode(claimCode).then(isValid => {
-            console.log(isValid)
+        isValidClaimCode(claimCode).then((isValid) => {
+            console.log(isValid);
             if (isValid) {
                 goto(`/tokens/${claimCode}`);
             } else {
                 Swal.fire({
-                    icon:  'error',
+                    icon: 'error',
                     title: 'Oops...',
                     text: 'Claim code does not exist.',
                     confirmButtonColor: 'crimson',
@@ -27,12 +27,10 @@
     }
 
     function isValidClaimCode(claimCode: string): Promise<boolean> {
-    return poapServiceClient.getToken(claimCode).then((tokens) => {
-        return tokens && tokens.length > 0;
-    });
-}
-
-
+        return poapServiceClient.getToken(claimCode).then((tokens) => {
+            return tokens && tokens.length > 0;
+        });
+    }
 </script>
 
 <div class="flex justify-center items-center min-h-screen">

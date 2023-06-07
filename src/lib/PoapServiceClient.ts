@@ -1,5 +1,5 @@
-import type { Token } from "@prisma/client";
-import Token from "../components/Token.svelte";
+import type { Token } from '@prisma/client';
+import Token from '../components/Token.svelte';
 
 export class PoapServiceClient {
     fetch: typeof fetch;
@@ -99,5 +99,4 @@ export class PoapServiceClient {
             return [];
         }
     }
-
 }
