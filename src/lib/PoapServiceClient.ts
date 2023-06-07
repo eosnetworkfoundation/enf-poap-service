@@ -92,7 +92,6 @@ export class PoapServiceClient {
             if (!response.ok) {
                 return [];
             }
-
             return await response.json();
         } catch (error) {
             console.error(error);
