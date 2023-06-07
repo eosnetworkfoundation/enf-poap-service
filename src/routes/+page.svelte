@@ -5,6 +5,7 @@
     import { PoapServiceClient } from '$lib/PoapServiceClient.js';
     import type { Token } from '$lib/types.js';
     import TokenList from '../components/TokenList.svelte';
+    import { userAddress } from '$lib/store.js';
 
     let metadata: Record<string, string> = {};
     let provider: ethers.providers.Web3Provider | null;
@@ -23,6 +24,7 @@
 
                 // Get wallet address
                 const address = await signer.getAddress();
+                userAddress.set(address);
                 metadata.address = `Wallet Address: ${address}`;
 
                 // Get network type
