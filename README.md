@@ -13,37 +13,34 @@ Everything you need to create a POAP and share a claim link for others to claim 
 git clone <this repo> <directory>
 cd <directory>
 yarn install
+yarn run generate
 yarn run build
 ```
+
+_Note:_ if you don't run the yarn commands above locally, you will see typescript errors for types provided by Prisma and Sveltekit.
 
 ### Create a .env file or use the default
 
 You will need a .env file to define the ports, usernames, passwords, etc. You can create your own or use the default and modify as needed. To use the default, rename [default.env](./default.env) to .env.
 
-### Running docker
+### About docker
 
 We have two docker containers. One hosts our postgreSQL DB the other hosts a containerized version of our repo.
 The containerized version of our repo is a complete copy of what's in our repo and is useful for testing and will ultimately be how we deploy our app. However, development work can just happen directly on your local machine until you are ready to test.
 
-_Note:_ Make sure that your .env file has DATABASE_HOST set to db when running these commands and the scripts in the next section.
+### Running docker
+_Note:_ Make sure that your .env file has DATABASE_HOST set to db when running these commands and the scripts in this section.
 
-```sh
-docker-compose down -v # down shuts down the containers, -v also wipes data from the db
-docker-compose up # or docker-compose up --build if you modified the Dockerfile
-```
-
-docker-compose up runs the [Dockerfile](./Dockerfile) which copies the repo, runs some setup commands (notably yarn install and yarn build) and then runs the app on the port you indicate on your env file.
+Run ```docker-compose up --build``` to build your DB and server images and run them as a container. The build defined in the [Dockerfile](./Dockerfile) will install node_modules, generate prisma types, and then build the web app before finally running the node server. If you make changes and want to test again, use Ctrl+C to shut down the containers and rerun ```docker-compose up --build```.
 
 ### Seeding the container or applying new migrations
 
-Once you see both containers up and ready, you can reset, apply the latest migrations, and seed the DB using
+If it's your first time running the DB, if there are changes to the [prisma schema](./prisma/schema.prisma), or if there are [new migrations](./prisma/migrations/), then run the init script to reset the db, apply the migrations, and seed the db.
 
 ```sh
 chmod +x ./scripts/init-db.sh
 ./scripts/init-db.sh
 ```
-
-That command is most often what you'll want to do when pulling in changes which include modifications to the prisma models.
 
 If you do not want to reset the db or seed it and only want to apply the latest migrations, you can run
 

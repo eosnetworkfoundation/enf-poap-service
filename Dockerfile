@@ -2,8 +2,11 @@ FROM node:19
 RUN apt-get update -qq && apt-get install -y postgresql-client
 
 WORKDIR /web
-COPY . /web
+COPY package.json .
 RUN yarn install
+COPY prisma/schema.prisma prisma
+RUN yarn run generate
+COPY . /web
 RUN yarn run build
 
 # [PI-PORT] WIP: Uncomment this when you want to pass in a specific port.
