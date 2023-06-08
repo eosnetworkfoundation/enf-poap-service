@@ -29,9 +29,10 @@ We have two docker containers. One hosts our postgreSQL DB the other hosts a con
 The containerized version of our repo is a complete copy of what's in our repo and is useful for testing and will ultimately be how we deploy our app. However, development work can just happen directly on your local machine until you are ready to test.
 
 ### Running docker
+
 _Note:_ Make sure that your .env file has DATABASE_HOST set to db when running these commands and the scripts in this section.
 
-Run ```docker-compose up --build``` to build your DB and server images and run them as a container. The build defined in the [Dockerfile](./Dockerfile) will install node_modules, generate prisma types, and then build the web app before finally running the node server. If you make changes and want to test again, use Ctrl+C to shut down the containers and rerun ```docker-compose up --build```.
+Run `docker-compose up --build` to build your DB and server images and run them as a container. The build defined in the [Dockerfile](./Dockerfile) will install node_modules, generate prisma types, and then build the web app before finally running the node server. If you make changes and want to test again, use Ctrl+C to shut down the containers and rerun `docker-compose up --build`.
 
 ### Seeding the container or applying new migrations
 
