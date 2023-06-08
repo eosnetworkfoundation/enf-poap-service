@@ -4,7 +4,7 @@ RUN apt-get update -qq && apt-get install -y postgresql-client
 WORKDIR /web
 COPY package.json .
 RUN yarn install
-COPY prisma/schema.prisma prisma
+COPY prisma/schema.prisma prisma/schema.prisma
 RUN yarn run generate
 COPY . /web
 RUN yarn run build
