@@ -100,11 +100,11 @@ export class PoapServiceClient {
     }
 
     async createToken(
-            name: string,
-            description: string,
-            imageUrl: string,
-            creatorAddress: string
-        ): Promise<Token> {
+        name: string,
+        description: string,
+        imageUrl: string,
+        creatorAddress: string
+    ): Promise<Token> {
         try {
             const response = await this.fetch(`${this.origin}/v1/poap/create`, {
                 method: 'POST',
@@ -118,7 +118,7 @@ export class PoapServiceClient {
                     creatorAddress,
                 }),
             });
-    
+
             if (!response.ok) {
                 throw new Error(`Response not OK: ${response.status}`);
             }
