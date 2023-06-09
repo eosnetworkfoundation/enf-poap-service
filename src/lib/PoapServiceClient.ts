@@ -123,11 +123,6 @@ export class PoapServiceClient {
                 throw new Error(`Response not OK: ${response.status}`);
             }
 
-            //const responseData = await response.json();
-            //const claimCode = responseData.claimCode;
-            //const claimUrl = responseData.claimCodeUrl;
-
-            //return { claimCode, claimUrl };
             return await response.json();
         } catch (error) {
             console.error(error);
