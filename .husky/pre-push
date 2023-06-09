@@ -8,6 +8,8 @@ fi
 yarn check
 yarn format
 yarn lint --fix
-git add -A
-git commit -m "Husky: Committing result of prettier"
+if [[ -n $(git status -s) ]]; then
+    git add -A
+    git commit -m "Husky: Committing result of prettier"
+fi
 yarn test:once
