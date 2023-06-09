@@ -2,8 +2,6 @@
 . "$(dirname -- "$0")/_/husky.sh"
 
 yarn check
+yarn lint
 yarn format
-yarn lint --fix
-git add -A
-git commit -m "prettier"
 yarn test:once
