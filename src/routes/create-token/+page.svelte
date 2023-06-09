@@ -1,19 +1,35 @@
 <script lang="ts">
     import Swal from 'sweetalert2';
+    import { PoapServiceClient } from '$lib/PoapServiceClient.js';
+    import { userAddress } from '$lib/store.js';
 
     let name = '';
     let description = '';
-    let file: File | null = null;
+    let image: File | null = null;
+    let imageURL = '';
+    let poapServiceClient: PoapServiceClient;
+    let currentAddress: string | null;
 
+    if (typeof window !== 'undefined') {
+        poapServiceClient = new PoapServiceClient();
+    }
+
+    userAddress.subscribe((value) => {
+        currentAddress = value;
+    });
+
+    // TODO: cloudify upload and output URL
     function handleFileUpload(event: Event) {
         const target = event.target as HTMLInputElement;
         if (target.files) {
-            file = target.files[0];
+            image = target.files[0];
+            imageURL = 'https://i.ytimg.com/vi/Gnm3hIcjiCQ/hqdefault.jpg'; // temp default image URL for now
         }
     }
 
     async function submit() {
-        if (!name || !description || !file) {
+        console.log(name, description, imageURL, currentAddress)
+        if (!name || !description || !imageURL) {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
@@ -22,17 +38,31 @@
             });
             return;
         }
+        else if (!currentAddress) {
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Please connect to a MetaMask wallet.',
+                confirmButtonColor: 'crimson',
+            });
+            return;
+        }
 
-        // TODO: Here we would normally send the data to our DB backend
-        // For now, we will just simulate a successful submission
         await new Promise((resolve) => setTimeout(resolve, 1000));
-        Swal.fire({
-            title: 'Success!',
-            html: 'Claim Code: <a href="https://example.com" style="color: blue;">www.example-url-link.com</a>',
-            icon: 'success',
-            confirmButtonColor: '#48BB78',
+        poapServiceClient.createToken(name, description, imageURL, currentAddress).then((token) => {
+            let claimCode = token.claimCode
+            let claimUrl = token.claimUrl
+            if (token) {
+                Swal.fire({
+                    title: 'Success!',
+                    html: `Claim Code: <a href=${claimUrl} style="color: blue;">${claimCode}</a>`,
+                    icon: 'success',
+                    confirmButtonColor: '#48BB78',
+                });
+            }
         });
     }
+
 </script>
 
 <div class="flex justify-center items-center min-h-screen">
