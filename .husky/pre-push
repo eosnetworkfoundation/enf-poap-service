@@ -9,5 +9,5 @@ yarn check
 yarn format
 yarn lint --fix
 git add -A
-git commit -m "prettier"
+git commit -m "Husky: Committing result of prettier"
 yarn test:once
