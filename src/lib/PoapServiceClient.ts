@@ -98,4 +98,35 @@ export class PoapServiceClient {
             return [];
         }
     }
+
+    async createToken(
+        name: string,
+        description: string,
+        imageUrl: string,
+        creatorAddress: string
+    ): Promise<Token | null> {
+        try {
+            const response = await this.fetch(`${this.origin}/v1/poap/create`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    name,
+                    description,
+                    imageUrl,
+                    creatorAddress,
+                }),
+            });
+
+            if (!response.ok) {
+                return null;
+            }
+
+            return await response.json();
+        } catch (error) {
+            console.error(error);
+            throw error;
+        }
+    }
 }
