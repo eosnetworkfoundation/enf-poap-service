@@ -104,7 +104,7 @@ export class PoapServiceClient {
         description: string,
         imageUrl: string,
         creatorAddress: string
-    ): Promise<Token> {
+    ): Promise<Token | null> {
         try {
             const response = await this.fetch(`${this.origin}/v1/poap/create`, {
                 method: 'POST',
@@ -120,7 +120,7 @@ export class PoapServiceClient {
             });
 
             if (!response.ok) {
-                throw new Error(`Response not OK: ${response.status}`);
+                return null;
             }
 
             return await response.json();

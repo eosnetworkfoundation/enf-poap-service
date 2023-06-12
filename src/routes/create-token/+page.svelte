@@ -28,7 +28,6 @@
     }
 
     async function submit() {
-        console.log(name, description, imageURL, currentAddress);
         if (!name || !description || !imageURL) {
             Swal.fire({
                 icon: 'error',
@@ -47,11 +46,10 @@
             return;
         }
 
-        await new Promise((resolve) => setTimeout(resolve, 1000));
         poapServiceClient.createToken(name, description, imageURL, currentAddress).then((token) => {
-            let claimCode = token.claimCode;
-            let claimUrl = token.claimUrl;
-            if (token) {
+            if (token != null) {
+                let claimCode = token.claimCode;
+                let claimUrl = token.claimUrl;
                 Swal.fire({
                     title: 'Success!',
                     html: `Claim Code: <a href=${claimUrl} style="color: blue;">${claimCode}</a>`,
