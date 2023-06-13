@@ -1,15 +1,32 @@
 <script lang="ts">
     import Swal from 'sweetalert2';
+    import type { Token } from '@prisma/client';
+    import type { ExternalProvider } from '@ethersproject/providers';
+    import { goto } from '$app/navigation';
+    import { PoapServiceClient } from '$lib/PoapServiceClient.js';
+
+    import { mintToken } from '../../utils/claim/claim';
+    import type { POAPInputs } from '../../utils/claim/claim';
+
+    let poapServiceClient: PoapServiceClient;
     let claimCode: string;
 
-    function submit(): void {
-        if (isValidClaimCode(claimCode)) {
-            Swal.fire({
-                title: 'Success!',
-                html: 'You have claimed the POAP!',
-                icon: 'success',
-                confirmButtonColor: '#48BB78',
-            });
+    if (typeof window !== 'undefined') {
+        poapServiceClient = new PoapServiceClient();
+    }
+
+    async function submit(): Promise<void> {
+        const claimCodeDetails = await isValidClaimCode(claimCode);
+        if (claimCodeDetails.length && window.ethereum) {
+            const externalProvider: ExternalProvider = window.ethereum;
+            const poapInputs: POAPInputs = {
+                title: claimCodeDetails[0].name,
+                description: claimCodeDetails[0].description,
+                url: claimCodeDetails[0].imageUrl,
+            };
+
+            await mintToken(poapInputs, externalProvider);
+            goto(`/tokens/${claimCode}`);
         } else {
             Swal.fire({
                 icon: 'error',
@@ -20,9 +37,13 @@
         }
     }
 
-    // TO-DO: create func to check if claim code is in DB
-    function isValidClaimCode(claimCode: string): boolean {
-        return claimCode === 'password';
+    async function isValidClaimCode(claimCode: string): Promise<Token[]> {
+        try {
+            const claimCodeResults = await poapServiceClient.getToken(claimCode);
+            return claimCodeResults;
+        } catch (err) {
+            throw new Error(`Failed to validate the claim code: ${err}`);
+        }
     }
 </script>
 

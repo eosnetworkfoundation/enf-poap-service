@@ -1,8 +1,10 @@
-export interface TokenMetadata {
+export interface BaseMetadata {
     name: string;
     description: string;
-    creatorAddress: string;
     imageUrl: string;
+}
+export interface TokenMetadata extends BaseMetadata {
+    creatorAddress: string;
 }
 
 export interface Token extends TokenMetadata {
