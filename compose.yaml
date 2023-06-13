@@ -12,6 +12,8 @@ services:
             context: .
         volumes:
             - .:/web
+            - /web/node_modules
+            - /web/build
         ports:
             - '${PORT}:${PORT}'
         depends_on:
