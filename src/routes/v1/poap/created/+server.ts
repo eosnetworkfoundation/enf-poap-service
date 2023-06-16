@@ -5,12 +5,11 @@ const prismaDatabase = new PrismaDatabase();
 
 export async function POST({ request }) {
     try {
-        const {address} = (await request.json()) ?? {};
+        const { address } = (await request.json()) ?? {};
         if (!address) {
             return json({ error: 'Invalid Input' }, { status: 400 });
         }
-        const tokens =
-            (await prismaDatabase.getCreatedTokensByUserAddress(address)) ?? [];
+        const tokens = (await prismaDatabase.getCreatedTokensByUserAddress(address)) ?? [];
         return json(tokens, { status: 200 });
     } catch (error) {
         return json({ error: 'Internal Error' }, { status: 500 });

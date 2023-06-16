@@ -60,7 +60,9 @@ describe('POAP Service', () => {
     });
     it('returns empty for /v1/created when db errors', async () => {
         // inject mock
-        prismaDatabase.getCreatedTokensByUserAddress.mockRejectedValue(new Error('bad database call'));
+        prismaDatabase.getCreatedTokensByUserAddress.mockRejectedValue(
+            new Error('bad database call')
+        );
         // emulate the HTTP POST call
         const response = await v1_poap_created(testRequest({ address: userETHAddress }));
         expect(response.ok).toBe(false);
@@ -133,7 +135,9 @@ describe('POAP Service', () => {
     });
     it('returns empty for /v1/claimed when db errors', async () => {
         // inject mock
-        prismaDatabase.getClaimedTokensByUserAddress.mockRejectedValue(new Error('bad database call'));
+        prismaDatabase.getClaimedTokensByUserAddress.mockRejectedValue(
+            new Error('bad database call')
+        );
         // emulate the HTTP POST call
         const response = await v1_poap_claimed(testRequest({ address: userETHAddress }));
         expect(response.ok).toBe(false);
