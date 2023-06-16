@@ -7,7 +7,7 @@ export async function POST({ request }) {
     try {
         const { address, claimCode } = (await request.json()) ?? {};
         if (!address || !claimCode) {
-            return json({ error: 'Invalid input' }, { status: 400 });
+            return json({ error: 'Invalid Input' }, { status: 400 });
         }
         const success = await prismaDatabase.addTokenToUserByClaimCode(address, claimCode);
         if (!success) {

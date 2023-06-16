@@ -7,11 +7,11 @@ export async function POST({ request }) {
     try {
         const { address } = (await request.json()) ?? {};
         if (!address) {
-            return json({ error: 'Invalid input' }, { status: 400 });
+            return json({ error: 'Invalid Input' }, { status: 400 });
         }
         const tokens = (await prismaDatabase.getClaimedTokensByUserAddress(address)) ?? [];
         return json(tokens, { status: 200 });
     } catch (error) {
-        return json({ error }, { status: 500 });
+        return json({ error: 'Internal Error' }, { status: 500 });
     }
 }

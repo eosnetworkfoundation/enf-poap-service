@@ -8,7 +8,7 @@ export async function POST({ request }) {
     try {
         const tokenMetadata = (await request.json()) ?? {};
         if (!tokenMetadata.name || !tokenMetadata.description || !tokenMetadata.creatorAddress) {
-            return json({ error: 'Invalid input' }, { status: 400 });
+            return json({ error: 'Invalid Input' }, { status: 400 });
         }
         const claimCode = await prismaDatabase.createToken({
             ...tokenMetadata,
@@ -22,6 +22,6 @@ export async function POST({ request }) {
             { status: 201 }
         );
     } catch (error) {
-        return json({ error: 'Internal error' }, { status: 500 });
+        return json({ error: 'Internal Error' }, { status: 500 });
     }
 }
