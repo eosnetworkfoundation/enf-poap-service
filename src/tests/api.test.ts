@@ -70,7 +70,7 @@ describe('POAP Service', () => {
             const response = await v1_poap_created(testRequest({ address: userETHAddress }));
             expect(response.ok).toBe(false);
             const tokens = await response.json();
-            expect(tokens).toStrictEqual({error: 'Internal Error'});
+            expect(tokens).toStrictEqual({ error: 'Internal Error' });
             expect(response.status).toStrictEqual(500);
         });
         it('returns Invalid for /v1/created when address not found', async () => {
@@ -80,7 +80,7 @@ describe('POAP Service', () => {
             const response = await v1_poap_created(testRequest({ BADNAME: userETHAddress }));
             expect(response.ok).toBe(false);
             const tokens = await response.json();
-            expect(tokens).toStrictEqual({error: 'Invalid Input'});
+            expect(tokens).toStrictEqual({ error: 'Invalid Input' });
             expect(response.status).toStrictEqual(400);
         });
     });
@@ -107,7 +107,7 @@ describe('POAP Service', () => {
             const response = await v1_poap_create(testRequest(testTokenMetadata, true));
             expect(response.ok).toBe(false);
             const claim = await response.json();
-            expect(claim).toStrictEqual({error: 'Invalid Input'});
+            expect(claim).toStrictEqual({ error: 'Invalid Input' });
             expect(response.status).toStrictEqual(400);
         });
         it('returns empty for /v1/create when db errors', async () => {
@@ -117,7 +117,7 @@ describe('POAP Service', () => {
             const response = await v1_poap_create(testRequest(testTokenMetadata));
             expect(response.ok).toBe(false);
             const claim = await response.json();
-            expect(claim).toStrictEqual({error: 'Internal Error'});
+            expect(claim).toStrictEqual({ error: 'Internal Error' });
             expect(response.status).toStrictEqual(500);
         });
     });
@@ -138,7 +138,7 @@ describe('POAP Service', () => {
                 new Error('bad database call')
             );
             // emulate the HTTP POST call
-            const response = await v1_poap_claimed(testRequest({address: userETHAddress}));
+            const response = await v1_poap_claimed(testRequest({ address: userETHAddress }));
             expect(response.ok).toBe(false);
             const tokens = await response.json();
             expect(tokens).toStrictEqual({ error: 'Internal Error' });
@@ -148,10 +148,10 @@ describe('POAP Service', () => {
             // inject mock
             prismaDatabase.getClaimedTokensByUserAddress.mockResolvedValue([testToken]);
             // emulate the HTTP POST call
-            const response = await v1_poap_claimed(testRequest({BADNAME: userETHAddress}));
+            const response = await v1_poap_claimed(testRequest({ BADNAME: userETHAddress }));
             expect(response.ok).toBe(false);
             const tokens = await response.json();
-            expect(tokens).toStrictEqual({error: 'Invalid Input'});
+            expect(tokens).toStrictEqual({ error: 'Invalid Input' });
             expect(response.status).toStrictEqual(400);
         });
     });
@@ -166,22 +166,24 @@ describe('POAP Service', () => {
         });
         it('returns empty for /v1/claim when db errors', async () => {
             // inject mock
-            prismaDatabase.addTokenToUserByClaimCode.mockRejectedValue(new Error('bad database call'));
+            prismaDatabase.addTokenToUserByClaimCode.mockRejectedValue(
+                new Error('bad database call')
+            );
             // emulate the HTTP POST call
             const response = await v1_poap_claim(testRequest(mockClaim));
             expect(response.ok).toBe(false);
             const tokens = await response.json();
-            expect(tokens).toStrictEqual({error: 'Internal Error'});
+            expect(tokens).toStrictEqual({ error: 'Internal Error' });
             expect(response.status).toStrictEqual(500);
         });
         it('returns 400 for /v1/claim when claim code does not exist', async () => {
             // inject mock
             prismaDatabase.addTokenToUserByClaimCode.mockResolvedValue(true);
             // emulate the HTTP POST call
-            const response = await v1_poap_claim(testRequest({address: userETHAddress}));
+            const response = await v1_poap_claim(testRequest({ address: userETHAddress }));
             expect(response.ok).toBe(false);
             const tokens = await response.json();
-            expect(tokens).toStrictEqual({error: 'Invalid Input'});
+            expect(tokens).toStrictEqual({ error: 'Invalid Input' });
             expect(response.status).toStrictEqual(400);
         });
         it('returns Invalid for /v1/claim when address not present', async () => {
@@ -191,7 +193,7 @@ describe('POAP Service', () => {
             const response = await v1_poap_claim(testRequest(mockClaim));
             expect(response.ok).toBe(false);
             const tokens = await response.json();
-            expect(tokens).toStrictEqual({error: 'Claim code does not exist'});
+            expect(tokens).toStrictEqual({ error: 'Claim code does not exist' });
             expect(response.status).toStrictEqual(404);
         });
     });
