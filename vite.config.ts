@@ -5,6 +5,9 @@ export default defineConfig({
     plugins: [sveltekit()],
     test: {
         include: ['src/**/*.{test,spec}.{js,ts}'],
+        coverage: {
+            reportsDirectory: `src/tests/coverage`,
+        },
     },
     resolve: {
         alias: {
