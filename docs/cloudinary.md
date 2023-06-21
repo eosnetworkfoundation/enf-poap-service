@@ -21,7 +21,7 @@ title: Cloudinary Authenticated
 ---
 graph LR;
 ca[Client]-- params -->sa[Service]
-cb[Client]<-- signature --sb[Service]
+sb[Service]-- signature -->cb[Client]
 cc[Client]-- auth -->Cloudinary
 ```
 
