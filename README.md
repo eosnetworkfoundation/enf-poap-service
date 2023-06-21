@@ -77,4 +77,5 @@ You may get an error that a port is already in use if your Docker Container is a
 The API for storing images and tokens is documented in [api.yaml](./docs/api.yaml) this can be pasted into https://editor-next.swagger.io/ to view the API information in a nicer format. You can also install an extension for OpenAPI to generate this preview in your IDE.
 
 ## Reference
-- [Image Uploads](docs/cloudinary.md): Notes On Cloudinary Setup
+
+-   [Image Uploads](docs/cloudinary.md): Notes On Cloudinary Setup
