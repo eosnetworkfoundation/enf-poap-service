@@ -20,9 +20,9 @@ Authenticated requests can perform any type of processing and has access to all 
 title: Cloudinary Authenticated
 ---
 graph LR;
-Client-- params -->Service
-Client<-- signature --Service
-Client-- auth -->Cloudinary
+c1[Client]-- params -->s1[Service]
+c2[Client]<-- signature --s2[Service]
+c3[Client]-- auth -->Cloudinary
 ```
 
 On edge clients, like browsers you may not want to manage the Cloudinary secret needed to generate a signature. Unauthenticated requests allow image uploads without the need for a signature. The downside is they are limited in their capabilities. Unauthenticated uploaded must be enabled, and they need run through a specific set of filtering and processing rules.
